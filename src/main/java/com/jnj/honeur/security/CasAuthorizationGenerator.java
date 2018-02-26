@@ -36,20 +36,22 @@ public class CasAuthorizationGenerator<P extends CommonProfile> implements Autho
 
     private void processRoles(final P profile) {
         Object roleObj = profile.getAttribute(ROLE_ATTRIBUTE_NAME);
-        if(!(roleObj instanceof Collection)) {
-            LOG.warn("No roles found in CasProfile!");
-            return;
+        if( roleObj instanceof Collection) {
+            profile.addRoles((Collection)roleObj);
+        } else if (roleObj instanceof String){
+            profile.addRole((String)roleObj);
         }
-        profile.addRoles((Collection)roleObj);
+        LOG.warn("No roles found in CasProfile!");
     }
 
     private void processPermissions(final P profile) {
         Object permissionObj = profile.getAttribute(PERMISSION_ATTRIBUTE_NAME);
-        if(!(permissionObj instanceof Collection)) {
-            LOG.warn("No permissions found in CasProfile!");
-            return;
+        if(permissionObj instanceof Collection) {
+            profile.addPermissions((Collection)permissionObj);
+        } else if(permissionObj instanceof String){
+            profile.addPermission((String) permissionObj);
         }
-        profile.addPermissions((Collection)permissionObj);
+        LOG.warn("No permissions found in CasProfilve!");
     }
 
 }
