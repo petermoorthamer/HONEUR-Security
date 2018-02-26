@@ -51,7 +51,7 @@ public class CasAuthorizationGenerator<P extends CommonProfile> implements Autho
         } else if(permissionObj instanceof String){
             profile.addPermission((String) permissionObj);
         }
-        LOG.warn("No permissions found in CasProfilve!");
+        LOG.warn("No permissions found in CasProfile!");
     }
 
 }
