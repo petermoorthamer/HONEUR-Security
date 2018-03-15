@@ -20,11 +20,13 @@ public class CasAuthorizationGenerator<P extends CommonProfile> implements Autho
     private static final String DEFAULT_REMEMBER_ME_ATTRIBUTE_NAME = "longTermAuthenticationRequestTokenUsed";
     private static final String ROLE_ATTRIBUTE_NAME = "role";
     private static final String PERMISSION_ATTRIBUTE_NAME = "permission";
+    private static final String ID_ATTRIBUTE_NAME = "id";
 
     public P generate(final WebContext context, final P profile) {
         processRememberMe(profile);
         processRoles(profile);
         processPermissions(profile);
+        processId(profile);
         return profile;
     }
 
@@ -56,6 +58,16 @@ public class CasAuthorizationGenerator<P extends CommonProfile> implements Autho
             return;
         }
         LOG.warn("No permissions found in CasProfile!");
+    }
+
+
+    private void processId(final P profile) {
+        Object idObject = profile.getAttribute(ID_ATTRIBUTE_NAME);
+        if(idObject instanceof String){
+            profile.addAuthenticationAttribute(ID_ATTRIBUTE_NAME, idObject);
+            return;
+        }
+        LOG.warn("No id found in CasProfile!");
     }
 
 }
